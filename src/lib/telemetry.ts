@@ -1,6 +1,7 @@
 import { getDeviceId } from "@/lib/deviceId";
+import { viteApiBase } from "@/lib/viteApiBase";
 
-const BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? "";
+const BASE = viteApiBase();
 const ON = import.meta.env.VITE_TELEMETRY === "true";
 
 function post(body: Record<string, string>) {
