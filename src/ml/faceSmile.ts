@@ -42,3 +42,8 @@ export function smileScore(keypoints: FaceKp[] | undefined): number | null {
 
 /** 값이 이 이상이면 웃는 것으로 간주 (환경에 따라 2.0~3.0 조정) */
 export const SMILE_SCORE_THRESHOLD = 2.35;
+
+/**
+ * 이 값 이하이면 «미소 풀기»로 인정 (SMILE_SCORE_THRESHOLD 보다 낮게 두어 깜빡임 완화)
+ */
+export const SMILE_NEUTRAL_MAX_SCORE = 2.0;

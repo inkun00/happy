@@ -31,13 +31,13 @@ export const MISSIONS: Mission[] = [
   {
     id: "smile",
     title: "미소 짓기",
-    subtitle: "3초 간격으로 열 번 환하게",
+    subtitle: "웃었다가 풀기를 열 번",
     category: "solo",
     points: 50,
     verifyType: "smile",
-    instruction: "크게 웃는 순간을 약 3초 간격으로 열 번 인정받아요",
+    instruction: "미소 → 풀기 → 미소 … 열 번 반복해요",
     instructionSub:
-      "MediaPipe Face Mesh로 미소 점수를 측정합니다. 연속으로 10회·회차 사이 최소 3초입니다.",
+      "한 사이클은 «크게 웃기» 인정 후 «반드시 풀기»까지입니다. MediaPipe Face Mesh 점수로 판별합니다.",
   },
   {
     id: "hug",
@@ -58,9 +58,9 @@ export const MISSIONS: Mission[] = [
     category: "family",
     points: 80,
     verifyType: "voice",
-    instruction: "«고마워», «사랑해» 류를 띄어서 열 번 말해요",
+    instruction: "다양한 칭찬·격려를 열 번 말해요",
     instructionSub:
-      "약 3초 간격으로 10번 연속 인식되면 완료됩니다. Web Speech API(ko-KR), Chromium 권장.",
+      "고마워, 사랑해, 감사합니다, 힘내, 최고에요 등을 섞어 주세요. 같은 말 연속·약 3초 간격은 규칙이에요. Web Speech API(ko-KR), Chromium 권장.",
   },
   {
     id: "hold-hands",

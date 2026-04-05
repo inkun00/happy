@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { handHoldScore, hugScore, type SimplePose } from "./poseProximity";
+import {
+  handHoldScore,
+  hugScore,
+  hugTwoPersonGate,
+  type SimplePose,
+} from "./poseProximity";
 
 /**
  * 정규화 좌표(0~1) 안에 들어가는 대칭 스켈레톤.
@@ -54,6 +59,23 @@ describe("hugScore", () => {
     const far = hugScore([a, b]);
     expect(far).toBeLessThan(close);
     expect(far).toBeLessThan(0.5);
+  });
+});
+
+describe("hugTwoPersonGate", () => {
+  it("포즈 1개면 false", () => {
+    expect(hugTwoPersonGate([])).toBe(false);
+    expect(hugTwoPersonGate([skeleton(0.5)])).toBe(false);
+  });
+
+  it("같은 위치에 겹친 두 검출은 한 명으로 보고 false", () => {
+    const a = skeleton(0.5);
+    const b = skeleton(0.503);
+    expect(hugTwoPersonGate([a, b])).toBe(false);
+  });
+
+  it("떨어진 두 스켈레톤이면 true", () => {
+    expect(hugTwoPersonGate([skeleton(0.38), skeleton(0.62)])).toBe(true);
   });
 });
 

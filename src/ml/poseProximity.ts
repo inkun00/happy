@@ -226,6 +226,30 @@ function hugScorePair(a: SimplePose, b: SimplePose): number {
   return Math.min(1, raw + bonus);
 }
 
+/** 포옹 «두 명» 판정 — 전체 신뢰도·무게중심 분리 */
+const HUG_PAIR_MIN_POSE_SCORE = 0.2;
+/** 정규화 좌표(0~1)에서 중심 간 최소 거리 — 이보다 가깝으면 같은 사람 이중 검출로 간주 */
+const HUG_MIN_CENTROID_SEP = 0.12;
+
+/**
+ * 포옹 미션: **서로 다른 두 사람**이 잡혔는지(신뢰도 + 무게중심 분리).
+ * 한 명인데 포즈가 두 개 잡히면 중심이 거의 겹쳐 false가 됨.
+ */
+export function hugTwoPersonGate(poses: SimplePose[]): boolean {
+  const q = poses.filter((p) => (p.score ?? 0) >= HUG_PAIR_MIN_POSE_SCORE);
+  if (q.length < 2) return false;
+  let maxSep = 0;
+  for (let i = 0; i < q.length; i++) {
+    for (let j = i + 1; j < q.length; j++) {
+      const ca = centroid(q[i]);
+      const cb = centroid(q[j]);
+      if (!ca || !cb) continue;
+      maxSep = Math.max(maxSep, dist(ca, cb));
+    }
+  }
+  return maxSep >= HUG_MIN_CENTROID_SEP;
+}
+
 /**
  * 포옹: 감지된 **모든 포즈 쌍** 중 최고 점수.
  * (신뢰도 상위 2명만 고르면 배경·조각 포즈가 끼어 실제 포옹하는 두 명이 빠지는 경우가 많음)
