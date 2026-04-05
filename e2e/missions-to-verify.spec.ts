@@ -14,7 +14,7 @@ test.describe("미션 흐름", () => {
     ).toBeVisible();
     await expect(
       page.getByRole("heading", {
-        name: "«고마워», «사랑해» 같은 말을 말해 보세요",
+        name: "다양한 칭찬·격려를 열 번 말해요",
         level: 1,
       }),
     ).toBeVisible();
