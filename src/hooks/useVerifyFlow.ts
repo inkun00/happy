@@ -6,7 +6,11 @@ import { haversineM } from "@/ml/geo";
 import { SMILE_SCORE_THRESHOLD, smileScore } from "@/ml/faceSmile";
 import { ML_MODEL_ARTIFACTS } from "@/ml/modelRegistry";
 import { handHoldScore, hugScore, type SimplePose } from "@/ml/poseProximity";
-import { VOICE_KEYWORDS } from "@/verify/constants";
+import {
+  VOICE_AUTH_KEYWORDS,
+  VOICE_REPEAT_COUNT,
+  VOICE_REPEAT_GAP_MS,
+} from "@/verify/constants";
 import { syncVideoElementResolution } from "@/verify/syncVideoResolution";
 
 export type VerifyVisualInput = "stream" | "photo" | "placeholder";
@@ -34,6 +38,14 @@ export function useVerifyFlow(
   const finishedRef = useRef(false);
   /** 스트림 프레임 또는 네이티브 촬영 사진이 ML에 넘길 준비가 됨 */
   const hasRenderableFramesRef = useRef(false);
+
+  const voiceHitsRef = useRef(0);
+  const lastVoiceAcceptAtRef = useRef<number | null>(null);
+  const voiceSubmittingRef = useRef(false);
+
+  const smileHitsRef = useRef(0);
+  const lastSmileAcceptAtRef = useRef<number | null>(null);
+  const smileSubmittingRef = useRef(false);
 
   const [progress, setProgress] = useState(0);
   const [hud, setHud] = useState("준비 중…");
@@ -268,7 +280,7 @@ export function useVerifyFlow(
 
     const goal = mission.poseGoal;
     const isSmile = mission.verifyType === "smile";
-    const targetMs = isSmile ? 2800 : 2200;
+    const poseTargetMs = 2200;
 
     const staticImage = visualInput === "photo";
 
@@ -327,15 +339,69 @@ export function useVerifyFlow(
           } else {
             const score = smileScore(faces[0]?.keypoints);
             const smile = score != null && score >= SMILE_SCORE_THRESHOLD;
-            setHud(
-              smile
-                ? `미소 감지 (${(score ?? 0).toFixed(2)}) — 유지해 주세요`
-                : score != null
-                  ? `입 형태 분석 중 (${score.toFixed(2)}) — 더 크게 웃어 보세요`
+            const scoreHint =
+              score != null ? ` (${(score ?? 0).toFixed(2)})` : "";
+            if (!smile) {
+              setHud(
+                score != null
+                  ? `입 형태 분석 중${scoreHint} — 더 크게 웃어 보세요`
                   : "얼굴을 프레임 안에 두고 웃어 보세요",
-            );
-            if (smile) goodMsRef.current += dt;
-            else goodMsRef.current = Math.max(0, goodMsRef.current - dt * 1.5);
+              );
+            } else if (smileSubmittingRef.current) {
+              setHud(`미소 감지${scoreHint} — 저장 중…`);
+            } else {
+              const now = Date.now();
+              const last = lastSmileAcceptAtRef.current;
+              if (last !== null) {
+                const delta = now - last;
+                if (delta < VOICE_REPEAT_GAP_MS) {
+                  const waitSec = Math.ceil(
+                    (VOICE_REPEAT_GAP_MS - delta) / 1000,
+                  );
+                  setHud(
+                    `미소 유지${scoreHint} — 다음 인정까지 약 ${waitSec}초 (${smileHitsRef.current}/${VOICE_REPEAT_COUNT})`,
+                  );
+                } else {
+                  lastSmileAcceptAtRef.current = now;
+                  smileHitsRef.current += 1;
+                  const n = smileHitsRef.current;
+                  const pct = Math.min(
+                    100,
+                    Math.round((n / VOICE_REPEAT_COUNT) * 100),
+                  );
+                  setProgress(pct);
+                  setHud(
+                    n >= VOICE_REPEAT_COUNT
+                      ? "인증 저장 중…"
+                      : `미소 감지${scoreHint} — ${VOICE_REPEAT_COUNT}번 중 ${n}번 · 약 ${VOICE_REPEAT_GAP_MS / 1000}초 뒤 다시 크게 웃어 주세요`,
+                  );
+                  if (n >= VOICE_REPEAT_COUNT) {
+                    smileSubmittingRef.current = true;
+                    void (async () => {
+                      const ok = await syncComplete();
+                      smileSubmittingRef.current = false;
+                      if (!ok) {
+                        smileHitsRef.current = 0;
+                        lastSmileAcceptAtRef.current = null;
+                        setProgress(0);
+                        setHud(
+                          `저장에 실패했어요. 약 ${VOICE_REPEAT_GAP_MS / 1000}초 간격으로 ${VOICE_REPEAT_COUNT}번 다시 웃어 주세요.`,
+                        );
+                      }
+                    })();
+                  }
+                }
+              } else {
+                lastSmileAcceptAtRef.current = now;
+                smileHitsRef.current = 1;
+                setProgress(
+                  Math.min(100, Math.round((1 / VOICE_REPEAT_COUNT) * 100)),
+                );
+                setHud(
+                  `${VOICE_REPEAT_COUNT}번 중 1번 · 약 ${VOICE_REPEAT_GAP_MS / 1000}초 뒤 다시 크게 웃어 주세요${scoreHint}`,
+                );
+              }
+            }
           }
         }
 
@@ -376,13 +442,18 @@ export function useVerifyFlow(
           else goodMsRef.current = Math.max(0, goodMsRef.current - dt * 1.2);
         }
 
-        const p = Math.min(100, (goodMsRef.current / targetMs) * 100);
-        setProgress(p);
-        if (p >= 100) {
-          const ok = await syncComplete();
-          if (ok) return;
-          goodMsRef.current = 0;
-          setProgress(0);
+        if (mission.verifyType === "pose") {
+          const p = Math.min(
+            100,
+            (goodMsRef.current / poseTargetMs) * 100,
+          );
+          setProgress(p);
+          if (p >= 100) {
+            const ok = await syncComplete();
+            if (ok) return;
+            goodMsRef.current = 0;
+            setProgress(0);
+          }
         }
       } catch (e) {
         console.warn(e);
@@ -392,6 +463,12 @@ export function useVerifyFlow(
 
     goodMsRef.current = 0;
     lastTsRef.current = null;
+    if (isSmile) {
+      smileHitsRef.current = 0;
+      lastSmileAcceptAtRef.current = null;
+      smileSubmittingRef.current = false;
+      setProgress(0);
+    }
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
   }, [
@@ -406,6 +483,11 @@ export function useVerifyFlow(
 
   useEffect(() => {
     if (!mission || mission.verifyType !== "voice") return;
+    voiceHitsRef.current = 0;
+    lastVoiceAcceptAtRef.current = null;
+    voiceSubmittingRef.current = false;
+    setProgress(0);
+
     const Ctor = window.webkitSpeechRecognition ?? window.SpeechRecognition;
     if (!Ctor) {
       setPermissionError("이 브라우저는 음성 인식을 지원하지 않습니다.");
@@ -417,22 +499,69 @@ export function useVerifyFlow(
     rec.continuous = true;
     rec.interimResults = true;
     rec.maxAlternatives = 1;
-    setHud("마이크로 한마디 해 보세요.");
+    setHud(
+      `«고마워» 또는 «사랑해» 류를 약 ${VOICE_REPEAT_GAP_MS / 1000}초 간격으로 ${VOICE_REPEAT_COUNT}번 말해 주세요.`,
+    );
 
     rec.onresult = (ev) => {
-      let text = "";
-      for (let i = ev.resultIndex; i < ev.results.length; i++) {
-        text += ev.results[i][0].transcript;
+      let displayText = "";
+      for (let i = 0; i < ev.results.length; i++) {
+        displayText += ev.results[i][0].transcript;
       }
-      setTranscript(text.trim());
-      const hit = VOICE_KEYWORDS.some((k) => text.includes(k));
-      if (hit) {
-        setProgress(100);
-        void (async () => {
-          const ok = await syncComplete();
-          if (!ok) setProgress(0);
-        })();
-        rec.stop();
+      setTranscript(displayText.trim());
+
+      if (voiceSubmittingRef.current) return;
+
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        if (!ev.results[i].isFinal) continue;
+        const segment = ev.results[i][0].transcript;
+        const hit = VOICE_AUTH_KEYWORDS.some((k) => segment.includes(k));
+        if (!hit) continue;
+
+        const now = Date.now();
+        if (lastVoiceAcceptAtRef.current !== null) {
+          const delta = now - lastVoiceAcceptAtRef.current;
+          if (delta < VOICE_REPEAT_GAP_MS) {
+            const waitSec = Math.ceil((VOICE_REPEAT_GAP_MS - delta) / 1000);
+            setHud(
+              `간격이 너무 짧아요. 약 ${waitSec}초 뒤에 다시 말해 주세요. (${voiceHitsRef.current}/${VOICE_REPEAT_COUNT})`,
+            );
+            continue;
+          }
+        }
+
+        lastVoiceAcceptAtRef.current = now;
+        voiceHitsRef.current += 1;
+        const n = voiceHitsRef.current;
+        const pct = Math.min(100, Math.round((n / VOICE_REPEAT_COUNT) * 100));
+        setProgress(pct);
+        setHud(
+          n >= VOICE_REPEAT_COUNT
+            ? "인증 저장 중…"
+            : `${VOICE_REPEAT_COUNT}번 중 ${n}번 · 약 ${VOICE_REPEAT_GAP_MS / 1000}초 간격으로 이어서 말해 주세요.`,
+        );
+
+        if (n >= VOICE_REPEAT_COUNT) {
+          voiceSubmittingRef.current = true;
+          void (async () => {
+            const ok = await syncComplete();
+            voiceSubmittingRef.current = false;
+            if (!ok) {
+              voiceHitsRef.current = 0;
+              lastVoiceAcceptAtRef.current = null;
+              setProgress(0);
+              setHud(
+                `저장에 실패했어요. 약 ${VOICE_REPEAT_GAP_MS / 1000}초 간격으로 ${VOICE_REPEAT_COUNT}번 다시 말해 주세요.`,
+              );
+            } else {
+              try {
+                rec.stop();
+              } catch {
+                /* noop */
+              }
+            }
+          })();
+        }
       }
     };
     rec.onerror = () => {
