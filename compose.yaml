@@ -2,7 +2,9 @@
 # 웹 http://localhost:8080 · API 직접 http://localhost:8787
 services:
   api:
-    build: ./server
+    build:
+      context: .
+      dockerfile: server/Dockerfile
     ports:
       - "8787:8787"
     environment:

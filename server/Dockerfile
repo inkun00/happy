@@ -6,10 +6,11 @@ RUN apt-get update \
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+# 빌드 컨텍스트는 저장소 루트(.) — Render 기본·compose 모두 동일하게 맞춤
+COPY server/package.json server/package-lock.json ./
 RUN npm ci --omit=dev
 
-COPY db.js paths.mjs constants.js index.js rateLimit.js backup-db.mjs ./
+COPY server/db.js server/paths.mjs server/constants.js server/index.js server/rateLimit.js server/backup-db.mjs ./
 
 ENV NODE_ENV=production
 ENV SQLITE_PATH=/data/happy.sqlite

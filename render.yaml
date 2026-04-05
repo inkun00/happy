@@ -14,7 +14,8 @@ services:
     region: singapore
     plan: free
     dockerfilePath: server/Dockerfile
-    dockerContext: server
+    # 저장소 루트 — Dockerfile이 server/*.js 경로로 복사함(Render 기본 컨텍스트와 일치)
+    dockerContext: .
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
