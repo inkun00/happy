@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Verification - 행복루틴</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#feb300",
+                        "on-background": "#392e00",
+                        "tertiary-dim": "#005a53",
+                        "surface-variant": "#f5dc81",
+                        "surface-container": "#ffe796",
+                        "tertiary-container": "#81f3e5",
+                        "surface-dim": "#edd374",
+                        "on-surface": "#392e00",
+                        "inverse-on-surface": "#ae9c5e",
+                        "on-secondary-fixed-variant": "#972900",
+                        "outline-variant": "#bfac6c",
+                        "inverse-primary": "#feb300",
+                        "secondary-container": "#ffc4b3",
+                        "error-container": "#f95630",
+                        "surface-tint": "#7b5400",
+                        "secondary": "#a83206",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#382400",
+                        "error": "#b02500",
+                        "secondary-fixed-dim": "#ffb19a",
+                        "surface": "#fff6e1",
+                        "outline": "#86763b",
+                        "on-primary-fixed-variant": "#5e4000",
+                        "surface-bright": "#fff6e1",
+                        "on-surface-variant": "#695b23",
+                        "secondary-fixed": "#ffc4b3",
+                        "primary-dim": "#6b4900",
+                        "on-secondary-fixed": "#651900",
+                        "surface-container-highest": "#f5dc81",
+                        "on-tertiary-container": "#005a53",
+                        "on-error": "#ffefec",
+                        "inverse-surface": "#130e00",
+                        "primary-fixed-dim": "#eda600",
+                        "on-tertiary": "#bffff5",
+                        "tertiary-fixed-dim": "#72e4d7",
+                        "secondary-dim": "#952800",
+                        "on-primary-container": "#523700",
+                        "on-tertiary-fixed-variant": "#00655d",
+                        "surface-container-high": "#fae18c",
+                        "primary": "#7b5400",
+                        "on-secondary-container": "#862400",
+                        "tertiary": "#00675f",
+                        "on-tertiary-fixed": "#004640",
+                        "on-primary": "#fff1df",
+                        "tertiary-fixed": "#81f3e5",
+                        "background": "#fff6e1",
+                        "surface-container-low": "#fff0c4",
+                        "on-error-container": "#520c00",
+                        "on-secondary": "#ffefeb",
+                        "error-dim": "#b92902",
+                        "primary-fixed": "#feb300"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .camera-mask {
+            mask: radial-gradient(circle 160px at center, transparent 99%, black 100%);
+            -webkit-mask: radial-gradient(circle 160px at center, transparent 99%, black 100%);
+        }
+        .glass-panel {
+            background: rgba(255, 246, 225, 0.7);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col overflow-hidden">
+<!-- TopAppBar (Back context: suppress default logo) -->
+<header class="flex justify-between items-center px-6 py-4 w-full fixed top-0 z-50 bg-[#fff6e1]/0">
+<button class="transition-transform duration-200 active:scale-95 hover:bg-[#feb300]/10 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#7b5400]" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="font-['Plus_Jakarta_Sans'] leading-relaxed text-xl font-bold text-[#7b5400]">
+            미션 인증
+        </div>
+<div class="text-[#7b5400] font-bold">
+            1,250P
+        </div>
+</header>
+<!-- Full Screen Camera Canvas -->
+<main class="relative flex-1 w-full h-screen">
+<!-- Background "Camera" Stream Simulation -->
+<div class="absolute inset-0 z-0">
+<img alt="Camera View" class="w-full h-full object-cover" data-alt="close-up portrait of a happy young woman with a radiant smile in a soft lit indoor environment, photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdAStPnHghI-Vc3nJk8neKTPcDUkdlLXJMRMWo56WYQkJwxeRsesYFP914vyZByy8WEHh-jp22Apbn56S6ubmjPVmOrF-BUKWFlnu7haO57jeKU5_tTdSJLbuCOAr1OENmdmPIag5FTAjwKZXpxeoHR0mzBxj1SsiKjXxlFSYIgLKvASLtpX-UbU4Oi7ZMpYhtvjbCEFfxJdrK6-xdMv3KmrGBz5apTZWNGBDIytpfg809VL2akEFJHB8qpFH3s7SrJuxsB_XH07A"/>
+<!-- Camera Overlay Mask -->
+<div class="absolute inset-0 bg-black/40 camera-mask"></div>
+</div>
+<!-- Verification Instructions & Interface -->
+<div class="relative z-10 h-full flex flex-col items-center justify-between py-24 px-6">
+<!-- Instruction Nudge -->
+<div class="w-full max-w-sm glass-panel rounded-xl p-6 text-center shadow-lg border border-white/20">
+<h1 class="font-headline text-2xl font-extrabold text-primary mb-2 tracking-tight">Smile widely for 3 seconds!</h1>
+<p class="text-on-surface-variant text-sm font-medium">당신의 밝은 미소를 AI가 확인하고 있어요</p>
+</div>
+<!-- Face Alignment Circle Visualizer -->
+<div class="relative flex items-center justify-center">
+<!-- Outer Ring Pulse -->
+<div class="absolute w-80 h-80 border-4 border-primary-container rounded-full animate-pulse opacity-50"></div>
+<!-- Face Frame -->
+<div class="w-80 h-80 border-2 border-white/50 rounded-full flex items-center justify-center">
+<!-- AI Detection Success Icon -->
+<div class="bg-tertiary-container/90 p-4 rounded-full shadow-xl transition-all duration-500 scale-110">
+<span class="material-symbols-outlined text-tertiary text-5xl" data-icon="sentiment_very_satisfied" style="font-variation-settings: 'FILL' 1;">sentiment_very_satisfied</span>
+</div>
+</div>
+</div>
+<!-- Real-time Progress & Status -->
+<div class="w-full max-w-md space-y-6">
+<!-- Status Badge -->
+<div class="flex justify-center">
+<div class="bg-tertiary px-6 py-2 rounded-full flex items-center gap-2 shadow-md">
+<span class="w-2 h-2 bg-tertiary-fixed rounded-full animate-ping"></span>
+<span class="text-on-tertiary text-sm font-bold uppercase tracking-widest">Smiling Detected</span>
+</div>
+</div>
+<!-- Progress Bar Container -->
+<div class="space-y-2">
+<div class="flex justify-between items-end px-2">
+<span class="text-primary font-bold text-lg font-headline">Verification Progress</span>
+<span class="text-primary font-black text-2xl">85%</span>
+</div>
+<div class="w-full h-4 bg-surface-container-low rounded-full overflow-hidden p-1 shadow-inner">
+<div class="h-full bg-gradient-to-r from-secondary to-primary-container rounded-full w-[85%] transition-all duration-1000"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Task-Focused suppression not applied here as it's a top-level mission flow) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-4 bg-[#fff6e1]/80 backdrop-blur-xl shadow-[0_-20px_40px_-5px_rgba(0,0,0,0.06)] rounded-t-[3rem]">
+<a class="flex flex-col items-center justify-center text-[#7b5400] opacity-60 px-5 py-2 transition-all hover:opacity-100 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Be_Vietnam_Pro'] text-[12px] font-medium mt-1">홈</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#feb300] text-[#fff6e1] rounded-full px-5 py-2 transition-all hover:opacity-100 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="task_alt" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+<span class="font-['Be_Vietnam_Pro'] text-[12px] font-medium mt-1">미션</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#7b5400] opacity-60 px-5 py-2 transition-all hover:opacity-100 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="redeem">redeem</span>
+<span class="font-['Be_Vietnam_Pro'] text-[12px] font-medium mt-1">상점</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#7b5400] opacity-60 px-5 py-2 transition-all hover:opacity-100 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Be_Vietnam_Pro'] text-[12px] font-medium mt-1">프로필</span>
+</a>
+</nav>
+</body></html>

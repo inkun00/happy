@@ -1,0 +1,27 @@
+# Render Blueprint: https://render.com/docs/infrastructure-as-code
+# 대시보드에서 repo 연결 후 이 파일로 Web Service 생성 가능.
+#
+# 배포 뒤 할 일:
+# 1) 서비스 Public URL(예: https://happy-routine-api.onrender.com)을 Vercel 환경 변수 VITE_API_URL 에 넣고 프론트 재배포
+# 2) Render 환경 변수 ALLOWED_ORIGINS 에 Vercel 도메인(콤마 구분, 끝 슬래시 없음)
+#
+# 무료 인스턴스: 미사용 시 슬립·콜드 스타트 있음. SQLite는 컨테이너 로컬(/data) — 무료 플랜에 영구 디스크가 없으면 재배포·이미지 교체 시 DB가 초기화될 수 있음. 운영은 유료 디스크 또는 외부 DB 검토.
+
+services:
+  - type: web
+    name: happy-routine-api
+    runtime: docker
+    region: singapore
+    plan: free
+    dockerfilePath: server/Dockerfile
+    dockerContext: server
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      - key: SQLITE_PATH
+        value: /data/happy.sqlite
+      - key: ALLOWED_ORIGINS
+        sync: false

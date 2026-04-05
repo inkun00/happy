@@ -1,0 +1,225 @@
+<!DOCTYPE html><html class="light" lang="ko"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>행복루틴 - 상점</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#feb300",
+                        "on-background": "#392e00",
+                        "tertiary-dim": "#005a53",
+                        "surface-variant": "#f5dc81",
+                        "surface-container": "#ffe796",
+                        "tertiary-container": "#81f3e5",
+                        "surface-dim": "#edd374",
+                        "on-surface": "#392e00",
+                        "inverse-on-surface": "#ae9c5e",
+                        "on-secondary-fixed-variant": "#972900",
+                        "outline-variant": "#bfac6c",
+                        "inverse-primary": "#feb300",
+                        "secondary-container": "#ffc4b3",
+                        "error-container": "#f95630",
+                        "surface-tint": "#7b5400",
+                        "secondary": "#a83206",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#382400",
+                        "error": "#b02500",
+                        "secondary-fixed-dim": "#ffb19a",
+                        "surface": "#fff6e1",
+                        "outline": "#86763b",
+                        "on-primary-fixed-variant": "#5e4000",
+                        "surface-bright": "#fff6e1",
+                        "on-surface-variant": "#695b23",
+                        "secondary-fixed": "#ffc4b3",
+                        "primary-dim": "#6b4900",
+                        "on-secondary-fixed": "#651900",
+                        "surface-container-highest": "#f5dc81",
+                        "on-tertiary-container": "#005a53",
+                        "on-error": "#ffefec",
+                        "inverse-surface": "#130e00",
+                        "primary-fixed-dim": "#eda600",
+                        "on-tertiary": "#bffff5",
+                        "tertiary-fixed-dim": "#72e4d7",
+                        "secondary-dim": "#952800",
+                        "on-primary-container": "#523700",
+                        "on-tertiary-fixed-variant": "#00655d",
+                        "surface-container-high": "#fae18c",
+                        "primary": "#7b5400",
+                        "on-secondary-container": "#862400",
+                        "tertiary": "#00675f",
+                        "on-tertiary-fixed": "#004640",
+                        "on-primary": "#fff1df",
+                        "tertiary-fixed": "#81f3e5",
+                        "background": "#fff6e1",
+                        "surface-container-low": "#fff0c4",
+                        "on-error-container": "#520c00",
+                        "on-secondary": "#ffefeb",
+                        "error-dim": "#b92902",
+                        "primary-fixed": "#feb300"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fff6e1;
+            color: #392e00;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body min-h-screen pb-32">
+<!-- TopAppBar -->
+<nav class="fixed top-0 z-50 flex justify-between items-center px-6 py-4 w-full bg-[#fff6e1] dark:bg-stone-950 font-['Plus_Jakarta_Sans'] leading-relaxed">
+<div class="flex items-center gap-2">
+<h1 class="text-xl font-bold text-[#7b5400] dark:text-[#feb300]" style="">오늘의 행복루틴</h1>
+</div>
+<div class="bg-primary-container/20 px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-transform duration-200 active:scale-95 cursor-pointer">
+<span class="text-sm font-bold text-[#7b5400] dark:text-[#feb300]" style="">1,250P</span>
+</div>
+</nav>
+<main class="pt-24 px-6">
+<!-- Hero Section: Nudge Message -->
+<section class="mb-10 relative overflow-hidden bg-primary-container/10 p-8 rounded-xl border-l-4 border-primary">
+<div class="relative z-10 max-w-xs">
+<h2 class="font-headline text-3xl font-extrabold text-on-surface mb-3 tracking-tight" style="">선물로 나누는<br>따뜻한 응원</h2>
+<p class="text-on-surface-variant font-medium leading-relaxed opacity-80" style="">
+                    획득한 포인트는 오직 타인을 위한 <span class="text-secondary font-bold underline decoration-secondary/30 underline-offset-4" style="">Gifts for Others</span>로만 사용할 수 있습니다.
+                </p>
+</div>
+<span class="material-symbols-outlined absolute -right-6 -bottom-6 text-[120px] text-primary/5 rotate-12" data-icon="redeem" style="">redeem</span>
+</section>
+<!-- Filters Section -->
+<div class="flex items-center gap-3 mb-8">
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label text-sm font-semibold transition-all active:scale-95 shadow-sm" style="">
+                Most Popular
+            </button>
+<button class="bg-surface-container-low text-on-surface-variant px-6 py-2.5 rounded-full font-label text-sm font-semibold hover:bg-surface-container transition-all active:scale-95" style="">
+                New
+            </button>
+</div>
+<!-- Rewards Grid: Bento-ish Layout -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Item 1: Coffee Coupon -->
+<div class="col-span-1 group">
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-[0_20px_40px_-5px_rgba(0,0,0,0.06)] hover:shadow-lg transition-all duration-300 transform group-hover:-translate-y-1">
+<div class="aspect-square rounded-lg mb-4 overflow-hidden bg-surface-container-low">
+<img alt="Coffee Coupon" class="w-full h-full object-cover" data-alt="Minimalist coffee cup on a warm cream background with soft morning shadows and steam rising" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZR3JcfIiiTIMLFWkLrWfO2PHVWlA0SNEHqgdMrVmO4XjKQmQ-NowpO_Jya8k9ynHyaMFY75J6j3n6x7zaaGpY_f3e4jh_NWTZ6azXJNxI9KIR3XdPdPZmRZG57dtbBJlACOgQVl-elK7YdVYErFuAD0Rig0HkqYGSJLBYd9uZ891F4Sd8Vo4MLIf5Y-t2mySapS8nyIxJq_UpL5N7WENhiK5MQAsXkU0zP_bIhF_GNbyNB_EgMsjd7gPAcJpEy507IpJVITknnwo" style="">
+</div>
+<div class="space-y-1">
+<h3 class="font-headline font-bold text-on-surface" style="">Coffee Coupon</h3>
+<div class="flex items-center justify-between">
+<span class="text-secondary font-bold text-sm" style="">1,000P</span>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="add_circle" style="">add_circle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2: Movie Ticket -->
+<div class="col-span-1 group">
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-[0_20px_40px_-5px_rgba(0,0,0,0.06)] hover:shadow-lg transition-all duration-300 transform group-hover:-translate-y-1">
+<div class="aspect-square rounded-lg mb-4 overflow-hidden bg-surface-container-low">
+<img alt="Movie Ticket" class="w-full h-full object-cover" data-alt="Cinematic close-up of a vintage movie theater ticket on a warm yellow velvet surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbGOV6svj1Ulud2Q9WhPQ1B8PueJwkBOvsPE5OaEhE-Kh18b8NiNZ6MW9fyTRlzXE62Hv6bV4nwEqdav3f8fE5d-xkb3HhDYZ3i-KDnLmNy9lipeO8w7dahgWlLbuFIOG8UhLD_tniEWfoKViHH1MPKCJsGr3uRrYnyXE8Y3sqg0UQnWRFTpxK16TvQAujYmhw2ZHvkZCCl9x_tN3-uzTo26vZFHQWw616eQyjeAslG3TjQn7Z43LoyjT5hKr_5SzWycuE97aDCCI" style="">
+</div>
+<div class="space-y-1">
+<h3 class="font-headline font-bold text-on-surface" style="">Movie Ticket</h3>
+<div class="flex items-center justify-between">
+<span class="text-secondary font-bold text-sm" style="">3,500P</span>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="add_circle" style="">add_circle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 3: Small Bouquet -->
+<div class="col-span-2 group">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_20px_40px_-5px_rgba(0,0,0,0.06)] flex items-center gap-6 hover:shadow-lg transition-all duration-300 transform group-hover:-translate-y-1">
+<div class="w-1/3 aspect-square rounded-lg overflow-hidden bg-surface-container-low">
+<img alt="Small Bouquet" class="w-full h-full object-cover" data-alt="Hand holding a small delicate bouquet of pastel wildflowers wrapped in brown paper" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0Nk7KPwHSQT0P-x82DCSojKkbzu-adjjKl3RT47XVHFUHmgzi4KtiNb92_f5lWIhbW8mQP4D5_6t0-iauoqvuZBQQwUfyUDF6ufpAqjZhx7QyMa_C3-_b5_f8DCYuAAXb5-NU5cwJnOtWWRkYKSi5_dHpWvYe3w8ZOsyWdajbrs7E6gso9ijXCBtD3QK_Yc1vYX82Vyx1b2ITYgidS5FbYZkuLSRsw1WWJeBl0ThjlrUVzT7aOdZwSEe5Gcg4YXmal9AZmfy0rEQ" style="">
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-headline text-xl font-bold text-on-surface" style="">Small Bouquet</h3>
+<p class="text-sm text-on-surface-variant opacity-70" style="">꽃 한 송이로 전하는 진심</p>
+</div>
+<span class="bg-tertiary-container text-on-tertiary-container text-[10px] px-2 py-0.5 rounded-full font-bold" style="">BEST</span>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="text-secondary font-extrabold text-lg" style="">5,000P</span>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-full text-sm font-bold active:scale-95 transition-transform" style="">Gift</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 4: Donation to Local Charity -->
+<div class="col-span-2 group">
+<div class="bg-tertiary/10 p-6 rounded-xl shadow-[0_20px_40px_-5px_rgba(0,0,0,0.06)] border border-tertiary/10 flex items-center gap-6 hover:shadow-lg transition-all duration-300 transform group-hover:-translate-y-1">
+<div class="flex-1 space-y-2">
+<h3 class="font-headline text-xl font-bold text-tertiary" style="">Donation to Local Charity</h3>
+<p class="text-sm text-tertiary-dim opacity-80 leading-snug" style="">지역 사회의 이웃들을 위해 <br>따뜻한 마음을 나누세요.</p>
+<div class="flex items-center justify-between pt-2">
+<span class="text-secondary font-extrabold text-lg" style="">10,000P+</span>
+<button class="bg-tertiary text-on-tertiary px-4 py-2 rounded-full text-sm font-bold active:scale-95 transition-transform" style="">Donate</button>
+</div>
+</div>
+<div class="w-1/3 aspect-square rounded-full flex items-center justify-center bg-white shadow-inner">
+<span class="material-symbols-outlined text-4xl text-tertiary" data-icon="volunteer_activism" style="">volunteer_activism</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Info Bar -->
+<div class="mt-12 mb-8 bg-surface-container-low/50 backdrop-blur-md p-4 rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" data-icon="info" style="">info</span>
+<p class="text-xs text-on-surface-variant leading-relaxed" style="">
+                상점에서 구매한 모든 리워드는 등록된 친구나 가족에게만 전송 가능하며, 본인 사용은 불가능합니다.
+            </p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-4 bg-[#fff6e1]/80 dark:bg-stone-950/80 backdrop-blur-xl shadow-[0_-20px_40px_-5px_rgba(0,0,0,0.06)] rounded-t-[3rem]">
+<div class="flex flex-col items-center justify-center text-[#7b5400] dark:text-[#feb300] opacity-60 px-5 py-2 hover:opacity-100 transition-all cubic-bezier(0.4, 0, 0.2, 1) active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="home" style="">home</span>
+<span class="font-['Be_Vietnam_Pro'] text-[12px] font-medium" style="">홈</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#7b5400] dark:text-[#feb300] opacity-60 px-5 py-2 hover:opacity-100 transition-all cubic-bezier(0.4, 0, 0.2, 1) active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="task_alt" style="">task_alt</span>
+<span class="font-['Be_Vietnam_Pro'] text-[12px] font-medium" style="">미션</span>
+</div>
+<!-- ACTIVE TAB: 상점 -->
+<div class="flex flex-col items-center justify-center bg-[#feb300] dark:bg-[#7b5400] text-[#fff6e1] rounded-full px-5 py-2 transition-all cubic-bezier(0.4, 0, 0.2, 1) active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="redeem" style="font-variation-settings: &quot;FILL&quot; 1;">redeem</span>
+<span class="font-['Be_Vietnam_Pro'] text-[12px] font-medium" style="">상점</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#7b5400] dark:text-[#feb300] opacity-60 px-5 py-2 hover:opacity-100 transition-all cubic-bezier(0.4, 0, 0.2, 1) active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="person" style="">person</span>
+<span class="font-['Be_Vietnam_Pro'] text-[12px] font-medium" style="">프로필</span>
+</div>
+</nav>
+</body></html>

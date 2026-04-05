@@ -1,0 +1,18 @@
+---
+description: 페이지 컴포넌트는 1000줄 미만 유지
+globs: src/pages/**/*.tsx
+alwaysApply: false
+---
+
+# 페이지 파일 줄 수 제한
+
+- **`src/pages/` 아래 각 `*.tsx` 파일**은 **실제 코드 기준 1000줄을 넘기지 않는다.**
+- 한 파일이 비대해지면 **커스텀 훅(`src/hooks/`)**, **하위 컴포넌트(`src/components/...`)**, **`src/lib/`** 로 분리한다.
+- **검증**: 저장소 루트에서 `npm run check:pages` 실행. **`npm run build` 전에 자동으로 실행된다**(`prebuild`).
+
+### 예시
+
+```text
+✅ Verify.tsx — ML·스트림 로직은 useVerifyCamera 등 훅으로 이전
+❌ Verify.tsx — 1000줄 단일 파일에 모든 effect·UI 유지
+```

@@ -1,0 +1,4 @@
+node_modules
+happy.sqlite
+backups
+npm-debug.log*

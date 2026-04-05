@@ -1,0 +1,8 @@
+server
+e2e
+playwright-report
+test-results
+android
+ios
+**/*.test.ts
+**/*.spec.ts

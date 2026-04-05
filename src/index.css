@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.camera-mask {
+  mask: radial-gradient(circle 160px at center, transparent 99%, black 100%);
+  -webkit-mask: radial-gradient(circle 160px at center, transparent 99%, black 100%);
+}
+
+.glass-panel {
+  background: rgba(255, 246, 225, 0.7);
+  backdrop-filter: blur(12px);
+}
+
+html,
+body,
+#root {
+  min-height: 100dvh;
+}

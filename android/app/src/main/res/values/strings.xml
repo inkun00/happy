@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">행복루틴</string>
+    <string name="title_activity_main">행복루틴</string>
+    <string name="package_name">kr.happyroutine.app</string>
+    <string name="custom_url_scheme">kr.happyroutine.app</string>
+</resources>

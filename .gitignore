@@ -1,0 +1,25 @@
+node_modules
+dist
+.DS_Store
+*.log
+.env
+.env.local
+server/backups
+server/happy.sqlite
+server/happy.sqlite-wal
+server/happy.sqlite-shm
+
+# Capacitor Android (소스는 커밋, 로컬·빌드 산출물만 제외)
+android/.gradle
+android/app/build
+android/build
+android/local.properties
+android/captures
+android/*.iml
+
+# Playwright
+/playwright-report/
+/test-results/
+/blob-report/
+/playwright/.cache/
+.vercel
